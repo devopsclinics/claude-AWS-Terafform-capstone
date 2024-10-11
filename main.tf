@@ -152,6 +152,13 @@ resource "aws_route_table_association" "db" {
   route_table_id = aws_route_table.db.id
 }
 
+resource "aws_db_subnet_group" "db-sg" {
+  name       = "db-sg"
+  subnet_ids = aws_subnet.private_db[*].id
+  tags = {
+    Name = "My DB subnet group"
+  }
+}
 
 
 data "aws_availability_zones" "available" {
