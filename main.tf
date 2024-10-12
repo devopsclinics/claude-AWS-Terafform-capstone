@@ -12,7 +12,7 @@ resource "aws_vpc" "default_vpc" {
   }
 }
 
-# Create 2 Public Subnets
+# Create Public Subnets
 resource "aws_subnet" "public" {
   count                   = 2
   vpc_id                  = aws_vpc.default_vpc.id
