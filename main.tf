@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create a VPC
+# Create a VPC 
 resource "aws_vpc" "default_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
@@ -12,7 +12,7 @@ resource "aws_vpc" "default_vpc" {
   }
 }
 
-# Create Public Subnets
+# Create 2 Public Subnets
 resource "aws_subnet" "public" {
   count                   = 2
   vpc_id                  = aws_vpc.default_vpc.id
