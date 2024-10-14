@@ -14,7 +14,7 @@ resource "aws_vpc" "default_vpc" {
 
 # Create Public Subnets
 resource "aws_subnet" "public" {
-  count                   = var.count
+  count                   = var.pub_subnet_count
   vpc_id                  = aws_vpc.default_vpc.id
   cidr_block              = "10.0.${count.index + 1}.0/24"
   availability_zone       = data.aws_availability_zones.available.names[count.index]
@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private_web" {
-  count             = var.count
+  count             = var.private_subnet_count
   vpc_id            = aws_vpc.default_vpc.id
   cidr_block        = "10.0.${count.index + 10}.0/24"
   availability_zone = data.aws_availability_zones.available.names[count.index]
