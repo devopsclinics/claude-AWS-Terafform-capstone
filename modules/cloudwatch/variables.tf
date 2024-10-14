@@ -1,3 +1,4 @@
+# web tier scaling
 variable "dashboard_name" {
   type        = string
   description = "Name of the CloudWatch dashboard"
@@ -53,6 +54,7 @@ variable "web_scale_down_policy_arn" {
   description = "ARN of the scale-down policy for the web tier"
 }
 
+# app tier scaling
 variable "app_scale_up_policy_arn" {
   type        = string
   description = "ARN of the scale-up policy for the application tier"
@@ -71,4 +73,20 @@ variable "log_group_name" {
 variable "log_retention_days" {
   type        = number
   description = "Number of days to retain CloudWatch logs"
+}
+
+# database monitor
+variable "db_instance_identifier" {
+  type        = string
+  description = "RDS instance identifier for monitoring"
+}
+
+variable "rds_scale_up_policy_arn" {
+  type        = string
+  description = "ARN of the scale-up policy for the web tier"
+}
+
+variable "rds_scale_down_policy_arn" {
+  type        = string
+  description = "ARN of the scale-down policy for the web tier"
 }
