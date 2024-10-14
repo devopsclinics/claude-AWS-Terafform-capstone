@@ -14,7 +14,7 @@ resource "aws_vpc" "default_vpc" {
 
 # Create Public Subnets
 resource "aws_subnet" "public" {
-  count                   = 2
+  count                   = var.count
   vpc_id                  = aws_vpc.default_vpc.id
   cidr_block              = "10.0.${count.index + 1}.0/24"
   availability_zone       = data.aws_availability_zones.available.names[count.index]
@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private_web" {
-  count             = 2
+  count             = var.count
   vpc_id            = aws_vpc.default_vpc.id
   cidr_block        = "10.0.${count.index + 10}.0/24"
   availability_zone = data.aws_availability_zones.available.names[count.index]
@@ -36,7 +36,7 @@ resource "aws_subnet" "private_web" {
 }
 
 resource "aws_subnet" "private_app" {
-  count             = 2
+  count             = var.count
   vpc_id            = aws_vpc.default_vpc.id
   cidr_block        = "10.0.${count.index + 20}.0/24"
   availability_zone = data.aws_availability_zones.available.names[count.index]
@@ -47,7 +47,7 @@ resource "aws_subnet" "private_app" {
 }
 
 resource "aws_subnet" "private_db" {
-  count             = 2
+  count             = var.count
   vpc_id            = aws_vpc.default_vpc.id
   cidr_block        = "10.0.${count.index + 30}.0/24"
   availability_zone = data.aws_availability_zones.available.names[count.index]
@@ -58,14 +58,14 @@ resource "aws_subnet" "private_db" {
 }
 
 resource "aws_eip" "nat" {
-  count = 2
+  count = var.count
   tags = {
     Name = "NAT Gateway EIP ${count.index + 1}"
   }
 }
 
 resource "aws_nat_gateway" "main" {
-  count         = 2
+  count         = var.count
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
   tags = {
@@ -83,7 +83,7 @@ resource "aws_internet_gateway" "igw" {
 
 # Create Route Tables
 resource "aws_route_table" "private_web" {
-  count  = 2
+  count  = var.count
   vpc_id = aws_vpc.default_vpc.id
 
   route {
@@ -96,7 +96,7 @@ resource "aws_route_table" "private_web" {
 }
 
 resource "aws_route_table" "private_app" {
-  count  = 2
+  count  = var.count
   vpc_id = aws_vpc.default_vpc.id
 
   route {
@@ -129,25 +129,25 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "private_web" {
-  count          = 2
+  count          = var.count
   subnet_id      = aws_subnet.private_web[count.index].id
   route_table_id = aws_route_table.private_web[count.index].id
 }
 
 resource "aws_route_table_association" "private_app" {
-  count          = 2
+  count          = var.count
   subnet_id      = aws_subnet.private_app[count.index].id
   route_table_id = aws_route_table.private_app[count.index].id
 }
 
 resource "aws_route_table_association" "public" {
-  count          = 2
+  count          = var.count
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "db" {
-  count          = 2
+  count          = var.count
   subnet_id      = aws_subnet.private_db[count.index].id
   route_table_id = aws_route_table.db.id
 }
