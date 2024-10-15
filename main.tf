@@ -23,7 +23,7 @@ module "capstone" {
 # Call the Security Groups module
 module "security_group" {
   source   = "./modules/security_group"
-  vpc_id   = module.vpc.vpc_id
+  vpc_id   = module.capstone.vpc_id
   my_ip    = var.my_ip
 }
 
@@ -31,7 +31,7 @@ module "security_group" {
 module "web_autoscaling" {
   source         = "./modules/autoscaling"
   # Reference the private subnet IDs output
-  subnet_ids     = module.vpc.web_private_subnet_ids  
+  subnet_ids     = module.captston.web_private_subnet_ids  
   name           = var.web_name
   ami_id         = var.ami_id
   instance_type  = var.instance_type
@@ -50,7 +50,7 @@ module "web_autoscaling" {
 module "app_autoscaling" {
   source         = "./modules/autoscaling"
   # Reference the private subnet IDs output
-  subnet_ids     = module.vpc.app_private_subnet_ids 
+  subnet_ids     = module.capstone.app_private_subnet_ids 
   name           = var.app_name
   ami_id         = var.ami_id
   instance_type  = var.instance_type
