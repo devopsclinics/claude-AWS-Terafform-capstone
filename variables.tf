@@ -198,3 +198,40 @@ variable "rds_scale_down_policy_arn" {
   type        = string
   description = "ARN of the scale-down policy for the web tier"
 }
+
+// RDS input values
+
+variable "allocated_storage" {
+  description = "The allocated storage for the DB instance"
+  type        = number
+  default     = 10
+}
+
+variable "db_name" {
+  description = "The name of the database"
+  type        = string
+  default     = "mydb"
+}
+
+variable "engine" {
+  description = "The database engine to use"
+  type        = string
+  default     = "mysql"
+}
+
+variable "username" {
+  description = "The username for the DB instance"
+  type        = string
+  default     = "foo"
+}
+
+variable "password" {
+  description = "The password for the DB instance"
+  type        = string
+  default     = "foobarbaz"
+}
+variable "instance_class" {
+  description = "The instance class to use for the DB instance"
+  type        = string
+  default     = "db.t3.micro"
+}
