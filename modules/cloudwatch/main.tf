@@ -135,56 +135,56 @@ resource "aws_cloudwatch_dashboard" "app_dashboard" {
         }
       },
       # RDS CPU Utilization
-      {
-        "type" = "metric",
-        "x" = 0,
-        "y" = 12,
-        "width" = 6,
-        "height" = 6,
-        "properties" = {
-          "metrics" = [
-            [ "AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", var.db_instance_identifier ]
-          ],
-          "period" = var.dashboard_period,
-          "stat" = "Average",
-          "region" = var.region,
-          "title" = "RDS CPU Utilization"
-        }
-      },
-      # RDS Free Storage Space
-      {
-        "type" = "metric",
-        "x" = 6,
-        "y" = 12,
-        "width" = 6,
-        "height" = 6,
-        "properties" = {
-          "metrics" = [
-            [ "AWS/RDS", "FreeStorageSpace", "DBInstanceIdentifier", var.db_instance_identifier ]
-          ],
-          "period" = var.dashboard_period,
-          "stat" = "Average",
-          "region" = var.region,
-          "title" = "RDS Free Storage Space"
-        }
-      },
-      # RDS Database Connections
-      {
-        "type" = "metric",
-        "x" = 12,
-        "y" = 12,
-        "width" = 6,
-        "height" = 6,
-        "properties" = {
-          "metrics" = [
-            [ "AWS/RDS", "DatabaseConnections", "DBInstanceIdentifier", var.db_instance_identifier ]
-          ],
-          "period" = var.dashboard_period,
-          "stat" = "Sum",
-          "region" = var.region,
-          "title" = "RDS Database Connections"
-        }
-      }
+      # {
+      #   "type" = "metric",
+      #   "x" = 0,
+      #   "y" = 12,
+      #   "width" = 6,
+      #   "height" = 6,
+      #   "properties" = {
+      #     "metrics" = [
+      #       [ "AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", var.db_instance_identifier ]
+      #     ],
+      #     "period" = var.dashboard_period,
+      #     "stat" = "Average",
+      #     "region" = var.region,
+      #     "title" = "RDS CPU Utilization"
+      #   }
+      # },
+      # # RDS Free Storage Space
+      # {
+      #   "type" = "metric",
+      #   "x" = 6,
+      #   "y" = 12,
+      #   "width" = 6,
+      #   "height" = 6,
+      #   "properties" = {
+      #     "metrics" = [
+      #       [ "AWS/RDS", "FreeStorageSpace", "DBInstanceIdentifier", var.db_instance_identifier ]
+      #     ],
+      #     "period" = var.dashboard_period,
+      #     "stat" = "Average",
+      #     "region" = var.region,
+      #     "title" = "RDS Free Storage Space"
+      #   }
+      # },
+      # # RDS Database Connections
+      # {
+      #   "type" = "metric",
+      #   "x" = 12,
+      #   "y" = 12,
+      #   "width" = 6,
+      #   "height" = 6,
+      #   "properties" = {
+      #     "metrics" = [
+      #       [ "AWS/RDS", "DatabaseConnections", "DBInstanceIdentifier", var.db_instance_identifier ]
+      #     ],
+      #     "period" = var.dashboard_period,
+      #     "stat" = "Sum",
+      #     "region" = var.region,
+      #     "title" = "RDS Database Connections"
+      #   }
+      # }
     ]
   })
 }
@@ -255,61 +255,61 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_app" {
 }
 
 # RDS Alarm
-resource "aws_cloudwatch_metric_alarm" "rds_high_cpu" {
-  alarm_name          = "rds_high_cpu"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = var.evaluation_periods
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/RDS"
-  period              = var.alarm_period
-  statistic           = "Average"
-  threshold           = var.high_cpu_threshold
-  alarm_actions       = [var.rds_scale_up_policy_arn]
+# resource "aws_cloudwatch_metric_alarm" "rds_high_cpu" {
+#   alarm_name          = "rds_high_cpu"
+#   comparison_operator = "GreaterThanThreshold"
+#   evaluation_periods  = var.evaluation_periods
+#   metric_name         = "CPUUtilization"
+#   namespace           = "AWS/RDS"
+#   period              = var.alarm_period
+#   statistic           = "Average"
+#   threshold           = var.high_cpu_threshold
+#   alarm_actions       = [var.rds_scale_up_policy_arn]
 
-  dimensions = {
-    DBInstanceIdentifier = var.db_instance_identifier
-  }
-}
+#   dimensions = {
+#     DBInstanceIdentifier = var.db_instance_identifier
+#   }
+# }
 
-resource "aws_cloudwatch_metric_alarm" "rds_low_storage" {
-  alarm_name          = "rds_low_storage"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = var.evaluation_periods
-  metric_name         = "FreeStorageSpace"
-  namespace           = "AWS/RDS"
-  period              = var.alarm_period
-  statistic           = "Average"
-  threshold           = 10000000000  # Adjust threshold based on your storage requirements (e.g., 10GB)
-  alarm_actions       = [var.rds_scale_down_policy_arn]
+# resource "aws_cloudwatch_metric_alarm" "rds_low_storage" {
+#   alarm_name          = "rds_low_storage"
+#   comparison_operator = "LessThanThreshold"
+#   evaluation_periods  = var.evaluation_periods
+#   metric_name         = "FreeStorageSpace"
+#   namespace           = "AWS/RDS"
+#   period              = var.alarm_period
+#   statistic           = "Average"
+#   threshold           = 10000000000  # Adjust threshold based on our storage requirements (e.g., 10GB)
+#   alarm_actions       = [var.rds_scale_down_policy_arn]
 
-  dimensions = {
-    DBInstanceIdentifier = var.db_instance_identifier
-  }
-}
+#   dimensions = {
+#     DBInstanceIdentifier = var.db_instance_identifier
+#   }
+# }
 
-resource "aws_cloudwatch_metric_alarm" "rds_high_connections" {
-  alarm_name          = "rds_high_connections"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = var.evaluation_periods
-  metric_name         = "DatabaseConnections"
-  namespace           = "AWS/RDS"
-  period              = var.alarm_period
-  statistic           = "Sum"
-  threshold           = 100  # Adjust threshold based on your expected number of connections
-  alarm_actions       = [var.rds_scale_up_policy_arn]
+# resource "aws_cloudwatch_metric_alarm" "rds_high_connections" {
+#   alarm_name          = "rds_high_connections"
+#   comparison_operator = "GreaterThanThreshold"
+#   evaluation_periods  = var.evaluation_periods
+#   metric_name         = "DatabaseConnections"
+#   namespace           = "AWS/RDS"
+#   period              = var.alarm_period
+#   statistic           = "Sum"
+#   threshold           = 100  # Adjust threshold based on your expected number of connections
+#   alarm_actions       = [var.rds_scale_up_policy_arn]
 
-  dimensions = {
-    DBInstanceIdentifier = var.db_instance_identifier
-  }
-}
+#   dimensions = {
+#     DBInstanceIdentifier = var.db_instance_identifier
+#   }
+# }
 
 
-resource "aws_cloudwatch_log_group" "app_log_group" {
-  name              = var.log_group_name
-  retention_in_days = var.log_retention_days
-}
+# resource "aws_cloudwatch_log_group" "app_log_group" {
+#   name              = var.log_group_name
+#   retention_in_days = var.log_retention_days
+# }
 
-resource "aws_cloudwatch_log_stream" "app_log_stream" {
-  name           = "app-log-stream"
-  log_group_name = aws_cloudwatch_log_group.app_log_group.name
-}
+# resource "aws_cloudwatch_log_stream" "app_log_stream" {
+#   name           = "app-log-stream"
+#   log_group_name = aws_cloudwatch_log_group.app_log_group.name
+# }

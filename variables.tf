@@ -66,7 +66,7 @@ variable "private_db_subnet_cidr_az2" {
 
 # autoscaling
 variable "my_ip" {
-  description = "Your IP address in CIDR notation for Bastion host access."
+  description = "Your Home IP address in CIDR notation for Bastion host access."
   type        = string
 }
 
@@ -110,22 +110,10 @@ variable "desired_capacity" {
 }
 
 # cloudwatch
-# web tier scaling
 variable "dashboard_name" {
   type        = string
   description = "Name of the CloudWatch dashboard"
 }
-
-variable "web_autoscaling_group_id" {
-  type        = string
-  description = "Name of the Auto Scaling group for the web tier"
-}
-
-variable "app_autoscaling_group_id" {
-  type        = string
-  description = "Name of the Auto Scaling group for the application tier"
-}
-
 
 variable "dashboard_period" {
   type        = number
@@ -152,27 +140,6 @@ variable "low_cpu_threshold" {
   description = "Threshold for low CPU usage"
 }
 
-variable "web_scale_up_policy_arn" {
-  type        = string
-  description = "ARN of the scale-up policy for the web tier"
-}
-
-variable "web_scale_down_policy_arn" {
-  type        = string
-  description = "ARN of the scale-down policy for the web tier"
-}
-
-# app tier scaling
-variable "app_scale_up_policy_arn" {
-  type        = string
-  description = "ARN of the scale-up policy for the application tier"
-}
-
-variable "app_scale_down_policy_arn" {
-  type        = string
-  description = "ARN of the scale-down policy for the application tier"
-}
-
 variable "log_group_name" {
   type        = string
   description = "Name of the CloudWatch log group"
@@ -184,17 +151,17 @@ variable "log_retention_days" {
 }
 
 # database monitor
-variable "db_instance_identifier" {
-  type        = string
-  description = "RDS instance identifier for monitoring"
-}
+# variable "db_instance_identifier" {
+#   type        = string
+#   description = "RDS instance identifier for monitoring"
+# }
 
-variable "rds_scale_up_policy_arn" {
-  type        = string
-  description = "ARN of the scale-up policy for the web tier"
-}
+# variable "rds_scale_up_policy_arn" {
+#   type        = string
+#   description = "ARN of the scale-up policy for the web tier"
+# }
 
-variable "rds_scale_down_policy_arn" {
-  type        = string
-  description = "ARN of the scale-down policy for the web tier"
-}
+# variable "rds_scale_down_policy_arn" {
+#   type        = string
+#   description = "ARN of the scale-down policy for the web tier"
+# }

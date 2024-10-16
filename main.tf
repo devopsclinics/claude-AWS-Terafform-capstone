@@ -31,7 +31,7 @@ module "security_group" {
 module "web_autoscaling" {
   source         = "./modules/autoscaling"
   # Reference the private subnet IDs output
-  subnet_ids     = module.captston.web_private_subnet_ids  
+  subnet_ids     = module.capstone.web_private_subnet_ids  
   name           = var.web_name
   ami_id         = var.ami_id
   instance_type  = var.instance_type
@@ -82,8 +82,8 @@ module "cloudwatch" {
   app_scale_down_policy_arn   = module.app_autoscaling.scale_down_policy_arn  
 
   # Monitoring RDS
-  rds_scale_down_policy_arn = ""
-  rds_scale_up_policy_arn = ""
+  # rds_scale_down_policy_arn = ""
+  # rds_scale_up_policy_arn = ""
 
   dashboard_name        = var.dashboard_name
   region                = var.region
@@ -96,5 +96,5 @@ module "cloudwatch" {
   log_retention_days    = var.log_retention_days
 
   # Pass the RDS instance identifier
-  db_instance_identifier = var.db_instance_identifier
+  # db_instance_identifier = var.db_instance_identifier
 }

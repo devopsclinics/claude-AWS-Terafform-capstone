@@ -26,7 +26,7 @@ min_size = 2
 max_size = 5
 desired_capacity = 2
 # my private key 
-key_name = "" # enter your key pair for all instances
+key_name = "test" # enter your prefered key-pair name for all instances. A .pem file will be created with the name you specified
 # EC2 instance type
 instance_type = "t2.micro"
 
@@ -39,3 +39,6 @@ high_cpu_threshold    = 80
 low_cpu_threshold     = 20
 log_group_name        = "claude-log-group"
 log_retention_days    = 7
+
+#db
+# db_instance_identifier = "claude"
