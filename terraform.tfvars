@@ -18,7 +18,7 @@ private_db_subnet_cidr_az2 = "10.0.8.0/24"# update any values from here
 web_name = "web-tier"
 app_name = "app-tier"
 # my home ip address
-my_ip   = "" # Enter your up block
+my_ip   = "10.0.0.0/16" # Enter your up block
 # my region ami - amazon linux
 ami_id  = "ami-037774efca2da0726" # this ami is related to us-east-2 region. Check if it's available in your region.
 # autoscaling size and capacity

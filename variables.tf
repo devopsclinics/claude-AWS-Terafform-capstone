@@ -199,39 +199,75 @@ variable "rds_scale_down_policy_arn" {
   description = "ARN of the scale-down policy for the web tier"
 }
 
-// RDS input values
-
-variable "allocated_storage" {
-  description = "The allocated storage for the DB instance"
-  type        = number
-  default     = 10
+# Variable for the S3 bucket name
+variable "bucket" {
+  description = "The name of the S3 bucket to be created."
+  type        = string
+  default     = "claude-test-bucket" # Change to the actual bucket name for the team
 }
+
+# Variable for the AWS KMS key deletion window
+variable "aws_kms_key" {
+  description = "The number of days before the AWS KMS key is deleted after scheduling."
+  type        = number
+  default     = "7"
+}
+
+variable "environment" {
+  description = "The environment name"
+  type        = string
+  default     = "Dev" 
+}
+
+// RDS input Values
+
 
 variable "db_name" {
   description = "The name of the database"
   type        = string
-  default     = "mydb"
+  default = ""
 }
 
-variable "engine" {
-  description = "The database engine to use"
-  type        = string
-  default     = "mysql"
-}
 
 variable "username" {
   description = "The username for the DB instance"
   type        = string
-  default     = "foo"
+  default = ""
+
 }
 
 variable "password" {
   description = "The password for the DB instance"
   type        = string
-  default     = "foobarbaz"
+ default      = ""
 }
-variable "instance_class" {
-  description = "The instance class to use for the DB instance"
+
+# Define the variable for RDS backup retention period
+variable "rds_backup_retention" {
+  description = "The number of days to retain RDS backups"
+  type        = number
+  default     = 7  # You can modify this default value as needed
+}
+
+# Define the variable for VPC security group IDs
+variable "vpc_security_group_ids" {
+  description = "List of VPC security group IDs for the RDS instance"
+  type        = list(string)
+}
+
+# Define the variable for DB subnet group name
+variable "db_subnet_group_name" {
+  description = "The name of the DB subnet group to associate with the RDS instance"
   type        = string
-  default     = "db.t3.micro"
+  default = ""
 }
+
+# Optional: Define a variable for tags if you want flexibility in naming your RDS instance
+variable "tags" {
+  description = "A map of tags to associate with the RDS instance"
+  type        = map(string)
+  default     = {
+    Name = "Claude RDS Instance"
+  }
+}
+

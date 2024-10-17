@@ -16,3 +16,13 @@ output "db_private_subnet_ids" {
     aws_subnet.private_db_subnet_az2.id,
   ]
 }
+
+output "vpc_id" {
+  description = "VPC ID"
+  value       = aws_vpc.main_vpc.id
+}
+
+output "db_subnet_group" {
+  description = "db subnet group"
+  value = aws_db_subnet_group.claude.name
+}

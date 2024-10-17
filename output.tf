@@ -1,4 +1,4 @@
-#RDS outputs
+# RDS outputs
 
 output "rds_instance_endpoint" {
   description = "Endpoint of the RDS instance"

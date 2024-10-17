@@ -192,3 +192,14 @@ resource "aws_route_table_association" "private_db_rt_assoc_az2" {
   subnet_id      = aws_subnet.private_db_subnet_az2.id
   route_table_id = aws_route_table.private_rt_az2.id
 }
+
+
+# RDS Subnet Group
+resource "aws_db_subnet_group" "claude" {
+  name       = "claude-rds-subnet-group"
+  subnet_ids = [aws_subnet.private_db_subnet_az1.id, aws_subnet.private_db_subnet_az2.id]
+
+  tags = {
+    Name = "${var.name}-private-db-group"
+  }
+}
